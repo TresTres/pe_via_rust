@@ -1,8 +1,8 @@
 use std::fmt;
 
-struct SolutionInfo {
-    index: u32,
-    problem_name: String,
+pub struct SolutionInfo {
+    pub index: u32,
+    pub problem_name: String,
 }
 
 pub struct SolutionResult {

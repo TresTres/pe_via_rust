@@ -1,15 +1,8 @@
-use crate::solution::{SolutionResult}; 
-
-pub fn run() -> SolutionResult {
+pub fn process() -> String {
     let target: u32 = 1000;
     let total: u32 = get_multotal(target);
-    SolutionResult::new(
-        1, 
-        String::from("Multiples of 3 or 5"),
-        total.to_string()
-    )
+    total.to_string()
 }
-
 
 fn get_multotal(target: u32) -> u32 {
     let mut multotal: u32 = 0;
