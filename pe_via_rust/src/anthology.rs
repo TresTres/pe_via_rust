@@ -4,6 +4,7 @@ use crate::solution::SolutionInfo;
 
 pub mod solution1;
 pub mod solution2;
+pub mod solution3;
 
 
 
@@ -21,6 +22,13 @@ pub fn load_directory(directory: &mut HashMap<u32, (SolutionInfo, fn() -> String
         (SolutionInfo { 
             index: 2, problem_name: String::from("Even Fibonacci Numbers") }, 
             solution2::process
+        )
+    );
+    directory.insert(
+        3,
+        (SolutionInfo { 
+            index: 3, problem_name: String::from("Largest Prime Factor") },
+            solution3::process
         )
     );
 }

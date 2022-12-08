@@ -11,7 +11,7 @@ fn main() {
         Obtain the solution by keying on the problem number and print the result.
     */
 
-    let problem_number: u32 = 2;
+    let problem_number: u32 = 3;
     let mut directory: HashMap<u32, (solution::SolutionInfo, fn() -> String)> = HashMap::new();
     anthology::load_directory(&mut directory);
     if let Some((info, process)) = directory.get(&problem_number) {
