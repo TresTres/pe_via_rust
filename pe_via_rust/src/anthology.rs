@@ -1,10 +1,9 @@
 use std::collections::HashMap;
-
 use crate::solution::SolutionInfo;
-
 pub mod solution1;
 pub mod solution2;
 pub mod solution3;
+pub mod solution4;
 
 
 
@@ -29,6 +28,13 @@ pub fn load_directory(directory: &mut HashMap<u32, (SolutionInfo, fn() -> String
         (SolutionInfo { 
             index: 3, problem_name: String::from("Largest Prime Factor") },
             solution3::process
+        )
+    );
+    directory.insert(
+        4,
+        (SolutionInfo { 
+            index: 4, problem_name: String::from("Largest Palindrome Product") },
+            solution4::process
         )
     );
 }
