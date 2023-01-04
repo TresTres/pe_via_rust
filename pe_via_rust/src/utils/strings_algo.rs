@@ -1,5 +1,5 @@
 
-fn is_palindrome(str: String) -> bool {
+pub fn is_palindrome(str: &String) -> bool {
     /* Check if a string is a palindrome using two pointers */
     //Optimize for trivial case
     let count: usize = str.chars().count();
@@ -51,11 +51,13 @@ mod tests {
     fn test_palindrome() {
         let mut str: String;
         str = String::from("x");
-        assert_eq!(is_palindrome(str), true);
+        assert_eq!(is_palindrome(&str), true);
         str = String::from("Hello");
-        assert_eq!(is_palindrome(str), false);
+        assert_eq!(is_palindrome(&str), false);
+        str = String::from("noon");
+        assert_eq!(is_palindrome(&str), true);
         str = String::from("foo💰oof");
-        assert_eq!(is_palindrome(str), true);
+        assert_eq!(is_palindrome(&str), true);
     }
 
 }
