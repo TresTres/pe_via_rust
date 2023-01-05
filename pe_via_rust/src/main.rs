@@ -1,3 +1,4 @@
+use std::env;
 use std::collections::HashMap;
 mod anthology;
 mod solution;
@@ -10,12 +11,17 @@ fn main() {
         Load a directory containing solution descriptions and algorithms.
         Obtain the solution by keying on the problem number and print the result.
     */
-
-    let problem_number: u32 = 4;
+    let args: Vec<String> = env::args().collect();
+    let problem_number: u32 = match args[1].trim().parse::<u32>() {
+        Ok(num) => num,
+        Err(_) => panic!("Invalid arg: Problem number was not parsed correctly"),
+    };
     let mut directory: HashMap<u32, (solution::SolutionInfo, fn() -> String)> = HashMap::new();
     anthology::load_directory(&mut directory);
     if let Some((info, process)) = directory.get(&problem_number) {
         println!("{}", run_solution(info, process));    
+    } else {
+        panic!("Could not find problem number: {}", problem_number);
     }
 }
 

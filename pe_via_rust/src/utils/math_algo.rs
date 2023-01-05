@@ -1,4 +1,4 @@
-
+#[allow(dead_code)]
 fn sieve_obtain_primes(num: u64) -> Vec<u64> {
     /*
         Obtain all the prime numbers up to num
