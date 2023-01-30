@@ -5,6 +5,7 @@ pub mod solution2;
 pub mod solution3;
 pub mod solution4;
 pub mod solution5;
+pub mod solution6;
 
 
 pub fn load_directory(directory: &mut HashMap<u32, (SolutionInfo, fn() -> String)>) -> () {
@@ -42,6 +43,13 @@ pub fn load_directory(directory: &mut HashMap<u32, (SolutionInfo, fn() -> String
         (SolutionInfo {
             index: 5, problem_name: String::from("Smallest Multiple") },
             solution5::process
+        )
+    );
+    directory.insert(
+        6,
+        (SolutionInfo { 
+            index: 6, problem_name: String::from("Sum Square Difference") },
+            solution6::process
         )
     );
 }
