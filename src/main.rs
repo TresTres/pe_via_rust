@@ -1,9 +1,8 @@
 use std::env;
-use std::collections::HashMap;
+
 mod anthology;
 mod solution;
 mod utils;
-
 
 fn main() {
     /*
@@ -12,27 +11,33 @@ fn main() {
         Obtain the solution by keying on the problem number and print the result.
     */
     let args: Vec<String> = env::args().collect();
-    let problem_number: u32 = match args[1].trim().parse::<u32>() {
-        Ok(num) => num,
-        Err(_) => panic!("Invalid arg: Problem number was not parsed correctly"),
-    };
-    let mut directory: HashMap<u32, (solution::SolutionInfo, fn() -> String)> = HashMap::new();
-    anthology::load_directory(&mut directory);
-    if let Some((info, process)) = directory.get(&problem_number) {
-        println!("{}", run_solution(info, process));    
-    } else {
-        panic!("Could not find problem number: {}", problem_number);
+    let directory: anthology::Directory = anthology::load_directory();
+
+    // check arguments
+    if args.len() < 2 {
+        panic!("No arguments provided. Please see cargo run help");
     }
-}
+    let argument: &str = args[1].trim();
+    let problem_number: Option<u32> = match argument.parse::<u32>() {
+        Ok(num) => Some(num),
+        Err(_) => None,
+    };
 
-
-fn run_solution(info: &solution::SolutionInfo, process: &fn() -> String) -> solution::SolutionResult {
-    /*
-        return a SolutionResult by running the process function
-    */
-    solution::SolutionResult::new(
-        info.index,
-        info.problem_name.clone(),
-        process()
-    )
+    // run solution or handle sub command
+    if let Some(problem_number) = problem_number {
+        return println!("{}", directory.run_solution(problem_number));
+    } 
+    match argument {
+        "help" => {
+            println!("Run a solution: cargo run <problem_number>");
+            println!("Obtain available problem numbers: cargo run list");
+        }
+        "list" => {
+            return directory.list();
+        }
+        _ => {
+            println!("Invalid argument: {}", argument);
+            println!("Please see cargo run help");
+        }
+    }
 }
