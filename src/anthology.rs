@@ -1,11 +1,13 @@
 use crate::solution::{SolutionResult, SolutionInfo};
 use std::collections::HashMap;
+
 pub mod solution1;
 pub mod solution2;
 pub mod solution3;
 pub mod solution4;
 pub mod solution5;
 pub mod solution6;
+pub mod solution7;
 
 pub struct Directory {
     directory: HashMap<u32, (SolutionInfo, fn() -> String)>,
@@ -97,6 +99,14 @@ pub fn load_directory() -> Directory {
             problem_name: String::from("Sum Square Difference"),
         },
         solution6::process,
+    );
+    directory.insert(
+        7,
+        SolutionInfo {
+            index: 7,
+            problem_name: String::from("10001st Prime"),
+        },
+        solution7::process,
     );
     directory
 }
