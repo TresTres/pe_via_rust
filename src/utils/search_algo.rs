@@ -7,6 +7,8 @@ pub fn find_nearest_element_less_than<K, V>(btreemap: &BTreeMap<K, V>, key: &K) 
 {
     /*
         Find the nearest element less than the key in a BTreeMap.
+        This is a workaround since BTreeMap cursors are not yet stable.
+        See https://github.com/rust-lang/rust/issues/107540 
     */
     if btreemap.is_empty() {
         panic!("BTreeMap is empty");
