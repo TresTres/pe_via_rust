@@ -1,4 +1,7 @@
 use std::cmp;
+use std::collections::BTreeMap;
+
+use super::search_algo;
 
 pub fn get_gcd(a: u64, b: u64) -> u64 {
     /*
@@ -33,6 +36,54 @@ pub fn get_lcm(a: u64, b: u64) -> u64 {
     */
     return a * b / get_gcd(a, b);
 }
+
+
+pub fn nth_prime(n: u64) -> u64 {
+    /*
+        Find the nth prime number.
+    */
+
+    // Maintain primes and their positions
+    let mut primes: Vec<u64> = vec![2];
+    let mut prime_positions: BTreeMap<u64, u32> = BTreeMap::new();
+    prime_positions.insert(2, 0);
+
+    let mut candidate: u64 = 2;
+
+    while primes.len() < n as usize {
+        
+        /*
+            Search for the next prime number iteratively.
+            Start by checking the number after the last known prime number. 
+            Then test for primality by checking if the number is divisible by known primes.
+            Optimize by checking prime numbers that are less than or equal to the square root of the candidate.
+        */
+        candidate = primes.last().unwrap() + 1;
+        loop {
+            let mut factor_found: bool = false;
+            let square_root: u64 = (candidate as f64).sqrt().ceil() as u64;
+            let starting_position: u32 = search_algo::find_nearest_element_less_than::<u64, u32>(&prime_positions, &square_root).1; 
+            for prime in primes[0..=starting_position as usize].iter().rev() {
+                if candidate % prime == 0 {
+                    factor_found = true;
+                    break;
+                }
+            }
+            if factor_found {
+                candidate += 1;
+                continue;
+            }
+            break;
+        }
+        primes.push(candidate);
+        prime_positions.insert(candidate, primes.len() as u32 - 1);
+    }
+    candidate
+}
+
+
+
+
 
 #[allow(dead_code)]
 fn sieve_obtain_primes(num: u64) -> Vec<u64> {
@@ -126,5 +177,26 @@ mod tests {
         assert_eq!(primes, [1, 2, 3, 5, 7]);
         primes = sieve_obtain_primes(33);
         assert_eq!(primes, [1, 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31]);
+    }
+
+
+    #[test]
+    fn test_nth_prime() {
+        let mut prime: u64;
+        prime = nth_prime(1);
+        assert_eq!(prime, 2);
+        prime = nth_prime(2);
+        assert_eq!(prime, 3);
+        prime = nth_prime(3);
+        assert_eq!(prime, 5);
+        prime = nth_prime(4);
+        assert_eq!(prime, 7);
+        prime = nth_prime(5);
+        assert_eq!(prime, 11);
+        //...and so on
+        prime = nth_prime(10);
+        assert_eq!(prime, 29);
+        prime = nth_prime(100);
+        assert_eq!(prime, 541);
     }
 }
